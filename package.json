@@ -1,0 +1,25 @@
+{
+  "name": "hepmil-interview",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "frontend-dev": "cd frontend && npm run dev",
+    "backend-dev": "cd backend && npm run dev",
+    "telegram-dev": "cd telegram && npm run dev",
+    "frontend-build": "cd frontend && npm run build",
+    "backend-build": "cd backend && npm run build",
+    "dev": "concurrently \"npm run frontend-dev\" \"npm run backend-dev\" \"npm run telegram-dev\"",
+    "build": "concurrently \"npm run frontend-build\" \"npm run backend-build\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "concurrently": "^9.1.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.59.20"
+  }
+}

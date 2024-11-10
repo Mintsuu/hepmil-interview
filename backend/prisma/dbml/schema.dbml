@@ -1,0 +1,35 @@
+//// ------------------------------------------------------
+//// THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+//// ------------------------------------------------------
+
+Table Memes {
+  id String [pk]
+  title String [not null]
+  posted_on DateTime
+  format MemeFormat [not null]
+  total_likes Int [not null]
+  total_comments Int [not null]
+  live_link String [not null]
+  thumbnail_link String [not null]
+  posted_by String [not null]
+  author Author [not null]
+
+  indexes {
+    (posted_by, title) [unique]
+  }
+}
+
+Table Author {
+  id String [pk]
+  username String [unique, not null]
+  memes_list Memes [not null]
+}
+
+Enum MemeFormat {
+  image
+  gif
+  video
+  unknown
+}
+
+Ref: Memes.posted_by > Author.id

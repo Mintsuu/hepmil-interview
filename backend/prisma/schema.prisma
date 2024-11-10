@@ -1,0 +1,46 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator dbml {
+  provider = "prisma-dbml-generator"
+}
+
+model Memes {
+  id String @id @unique @default(uuid())
+  title String 
+  posted_on DateTime?
+  format MemeFormat
+  total_likes Int
+  total_comments Int
+  live_link String
+  thumbnail_link String
+  posted_by String
+  author Author @relation("meme_author", fields: [posted_by], references: [id])
+
+  @@unique([posted_by, title])
+}
+
+model Author {
+  id String @id @unique @default(uuid())
+  username String @unique
+  memes_list Memes[] @relation("meme_author")
+}
+
+enum MemeFormat {
+  image
+  gif
+  video
+  unknown
+}

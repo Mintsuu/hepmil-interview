@@ -1,0 +1,41 @@
+services:
+  frontend:
+    container_name: memes-ui
+    build: ./frontend
+    depends_on:
+      - backend
+    ports:
+      - 8080:8080
+    env_file:
+      - ./frontend/.env
+    restart: unless-stopped
+  backend:
+    container_name: memes-api
+    depends_on:
+      - db
+    build: ./backend
+    ports:
+      - 3000:3000
+    env_file:
+      - ./backend/.env.prod
+    restart: unless-stopped
+  telegram:
+    container_name: memes-telegram-bot
+    depends_on:
+      - backend
+    build: ./telegram
+    env_file:
+      - ./telegram/.env
+    restart: unless-stopped
+  db:
+    image: postgres:latest
+    container_name: memes-db
+    ports:
+      - 5432:5432
+    env_file:
+      - ./db/.env
+    volumes:
+      - memesdb:/data/db
+    restart: unless-stopped
+volumes:
+  memesdb:
